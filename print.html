@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no" />
+  <title></title>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript" src="JsBarcode.all.js"></script>
+</head>
+<body>
+<!--startprint-->
+<svg id="svgcode"></svg>
+<!--endprint-->
+<!-- or -->
+<canvas id="canvascode"></canvas>
+<!-- or -->
+<img id="imgcode" />
+<img id="imgcode_sn">
+<a href="javascript:;" onClick="doPrint()">打印</a>
+<script>
+  $("#svgcode").JsBarcode('Hi!');//or JsBarcode("#svgcode", "Hi!");
+
+  $("#canvascode").JsBarcode('Hello world!');//or JsBarcode("#canvascode", "Hello world!");
+
+  //$("#imgcode").JsBarcode("I'm huangenai!");//or
+  JsBarcode("#imgcode", "I'm huangenai!");
+
+  JsBarcode("#imgcode_sn", "0000100001001", {
+    format: "CODE39",//选择要使用的条形码类型
+    width:2,//设置条之间的宽度
+    height:100,//高度
+    displayValue:true,//是否在条形码下方显示文字
+    text:"456",//覆盖显示的文本
+    fontOptions:"bold italic",//使文字加粗体或变斜体
+    font:"fantasy",//设置文本的字体
+    textAlign:"left",//设置文本的水平对齐方式
+    textPosition:"top",//设置文本的垂直位置
+    textMargin:2,//设置条形码和文本之间的间距
+    fontSize:15,//设置文本的大小
+    background:"#eee",//设置条形码的背景
+    lineColor:"#2196f3",//设置条和文本的颜色。
+    margin:15//设置条形码周围的空白边距
+  });
+  function doPrint() {
+    bdhtml=window.document.body.innerHTML;
+    sprnstr="<!--startprint-->"; //开始打印标识字符串有17个字符
+    eprnstr="<!--endprint-->"; //结束打印标识字符串
+    prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17); //从开始打印标识之后的内容
+    prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+    window.document.body.innerHTML=prnhtml; //把需要打印的指定内容赋给body.innerHTML
+    window.print(); //调用浏览器的打印功能打印指定区域
+    window.document.body.innerHTML=bdhtml;//重新给页面内容赋值；
+}
+</script>
+</body>
+</html>
